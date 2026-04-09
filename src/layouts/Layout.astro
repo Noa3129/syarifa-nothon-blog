@@ -120,8 +120,8 @@ if (database.Icon && database.Icon.Type === 'file') {
                   }
                 </a>
               </h1>
-              <div class="description">
-                {database.Description}
+              <div class="search-bar">
+                <SearchButton />
               </div>
             </header>
 
@@ -137,11 +137,6 @@ if (database.Icon && database.Icon.Type === 'file') {
             </footer>
           </div>
         </main>
-
-        <aside>
-          <SearchButton />
-          <slot name="aside" />
-        </aside>
       </div>
     </div>
 
@@ -160,37 +155,13 @@ if (database.Icon && database.Icon.Type === 'file') {
   }
 
   .container > div {
-    display: flex;
-    max-width: 1280px;
-  }
-  @media (max-width: 640px) {
-    .container > div {
-      display: block;
-    }
+    width: 100%;
+    max-width: 1760px;
+    margin: 0 auto;
   }
 
   main {
-    flex: 1;
-    order: 2;
     justify-content: space-between;
-  }
-  @media (max-width: 640px) {
-    main {
-      order: 1;
-    }
-  }
-
-  aside {
-    order: 1;
-    width: 300px;
-    padding: 20px 20px;
-    background-color: #f4f4f4;
-  }
-  @media (max-width: 640px) {
-    aside {
-      order: 2;
-      width: 100%;
-    }
   }
 
   div.cover {
@@ -204,51 +175,71 @@ if (database.Icon && database.Icon.Type === 'file') {
   }
 
   div.content {
-    padding: 20px 40px;
+    padding: 0 40px 20px;
   }
   @media (max-width: 640px) {
     div.content {
-      padding: 0 18px;
+      padding: 0 18px 20px;
     }
   }
 
-  main header {
-    padding: 20px 0 20px;
+  div.content > header {
+    margin-bottom: 20px;
+    background: #0c3665;
+    color: #fff;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    padding: 20px 40px;
   }
-  main header h1 {
+  @media (max-width: 640px) {
+    div.content > header {
+      padding: 18px;
+    }
+  }
+  div.content > header h1 {
     font-weight: 700;
-    color: #333;
+    color: #fff;
   }
-  main header h1 a {
+  div.content > header h1 a {
     display: block;
     color: inherit;
   }
-  main header h1 a:hover {
+  div.content > header h1 a:hover {
     color: inherit;
   }
-  main header h1 a span,
-  main header h1 a img {
+  div.content > header h1 a span,
+  div.content > header h1 a img {
     display: inline-block;
     font-size: 1.1em;
   }
-  main header h1 a span {
+  div.content > header h1 a span {
     margin-right: 0.3em;
     margin-left: -0.1rem;
   }
-  main header h1 a img {
+  div.content > header h1 a img {
     width: 1.2em;
     height: 1.2em;
     margin-right: 0.2em;
     margin-left: -0.3rem;
     vertical-align: sub;
   }
-  main header h1 a img.custom-icon {
+  div.content > header h1 a img.custom-icon {
     border-radius: var(--radius);
   }
 
-  main header div.description {
-    padding: 0.3rem 0 0.6rem;
-    font-size: 0.95rem;
+  div.content > header .search-bar {
+    width: min(100%, 680px);
+    margin-top: 12px;
+  }
+  div.content > header :global(.search-button) {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  div.content > header :global(.search-button:hover) {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+  div.content > header :global([astro-icon='octicon:search-24']) {
+    color: #fff;
   }
 
   main footer {
@@ -279,6 +270,7 @@ if (database.Icon && database.Icon.Type === 'file') {
 
     --bg: #fff;
     --fg: #333;
+    --content-fg: #222;
     --accents-1: #666;
     --accents-2: #666;
     --accents-3: #666;
@@ -292,6 +284,18 @@ if (database.Icon && database.Icon.Type === 'file') {
       'Helvetica Neue', sans-serif;
     --font-mono: SFMono-Regular, Menlo, Consolas, 'PT Mono', 'Liberation Mono',
       Courier, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1115;
+      --fg: #f3f4f6;
+      --content-fg: #d1d5db;
+      --accents-1: #cbd5e1;
+      --accents-2: #cbd5e1;
+      --accents-3: #cbd5e1;
+      --geist-foreground: #f3f4f6;
+    }
   }
 
   * {
@@ -363,14 +367,14 @@ if (database.Icon && database.Icon.Type === 'file') {
   }
 
   ol {
-    color: #222;
+    color: var(--content-fg);
     font-weight: 400;
     font-size: 0.9rem;
     line-height: 1.8rem;
   }
   p,
   ul {
-    color: #222;
+    color: var(--content-fg);
     font-weight: 400;
     font-size: 1rem;
     line-height: 1.8rem;

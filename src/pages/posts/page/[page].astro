@@ -1,10 +1,7 @@
 ---
 import {
   getPostsByPage,
-  getRankedPosts,
-  getAllTags,
   getNumberOfPages,
-  getPostsByPage,
 } from '../../../lib/notion/client.ts'
 import Layout from '../../../layouts/Layout.astro'
 import NoContents from '../../../components/NoContents.astro'
@@ -15,8 +12,6 @@ import PostFeaturedImage from '../../../components/PostFeaturedImage.astro'
 import PostExcerpt from '../../../components/PostExcerpt.astro'
 import ReadMoreLink from '../../../components/ReadMoreLink.astro'
 import Pagination from '../../../components/Pagination.astro'
-import BlogPostsLink from '../../../components/BlogPostsLink.astro'
-import BlogTagsLink from '../../../components/BlogTagsLink.astro'
 import styles from '../../../styles/blog.module.css'
 
 export async function getStaticPaths() {
@@ -31,10 +26,8 @@ export async function getStaticPaths() {
 
 const { page } = Astro.params
 
-const [posts, rankedPosts, tags, numberOfPages] = await Promise.all([
+const [posts, numberOfPages] = await Promise.all([
   getPostsByPage(parseInt(page, 10)),
-  getRankedPosts(),
-  getAllTags(),
   getNumberOfPages(),
 ])
 ---
@@ -49,16 +42,18 @@ const [posts, rankedPosts, tags, numberOfPages] = await Promise.all([
       posts.length === 0 ? (
         <NoContents contents={posts} />
       ) : (
-        posts.map((post) => (
-          <div class={styles.post} key={post.Slug}>
-            <PostDate post={post} />
-            <PostTags post={post} />
-            <PostTitle post={post} />
-            <PostFeaturedImage post={post} />
-            <PostExcerpt post={post} />
-            <ReadMoreLink post={post} />
-          </div>
-        ))
+        <div class={styles.postsGrid}>
+          {posts.map((post) => (
+            <div class={`${styles.post} ${styles.postCard}`} key={post.Slug}>
+              <PostDate post={post} />
+              <PostTags post={post} />
+              <PostTitle post={post} />
+              <PostFeaturedImage post={post} />
+              <PostExcerpt post={post} />
+              <ReadMoreLink post={post} />
+            </div>
+          ))}
+        </div>
       )
     }
 
@@ -68,11 +63,6 @@ const [posts, rankedPosts, tags, numberOfPages] = await Promise.all([
         numberOfPages={numberOfPages}
       />
     </footer>
-  </div>
-
-  <div slot="aside" class={styles.aside}>
-    <BlogPostsLink heading="Recommended" posts={rankedPosts} />
-    <BlogTagsLink heading="Categories" tags={tags} />
   </div>
 </Layout>
 
