@@ -120,9 +120,6 @@ if (database.Icon && database.Icon.Type === 'file') {
                   }
                 </a>
               </h1>
-              <div class="description">
-                {database.Description}
-              </div>
               <div class="search-bar">
                 <SearchButton />
               </div>
@@ -191,7 +188,7 @@ if (database.Icon && database.Icon.Type === 'file') {
   }
   main header h1 {
     font-weight: 700;
-    color: #333;
+    color: #0c3665;
   }
   main header h1 a {
     display: block;
@@ -220,10 +217,6 @@ if (database.Icon && database.Icon.Type === 'file') {
     border-radius: var(--radius);
   }
 
-  main header div.description {
-    padding: 0.3rem 0 0.6rem;
-    font-size: 0.95rem;
-  }
   main header .search-bar {
     width: min(100%, 680px);
   }
