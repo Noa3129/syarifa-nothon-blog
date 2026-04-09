@@ -50,3 +50,10 @@
   border-radius: 10px;
   background: #fff;
 }
+
+@media (prefers-color-scheme: dark) {
+  .postCard {
+    border-color: #fff;
+    background: #000;
+  }
+}

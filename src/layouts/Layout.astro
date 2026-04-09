@@ -185,10 +185,16 @@ if (database.Icon && database.Icon.Type === 'file') {
 
   div.content > header {
     margin-bottom: 20px;
-    border-radius: 10px;
     background: #0c3665;
     color: #fff;
-    padding: 20px 24px;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    padding: 20px 40px;
+  }
+  @media (max-width: 640px) {
+    div.content > header {
+      padding: 18px;
+    }
   }
   div.content > header h1 {
     font-weight: 700;
